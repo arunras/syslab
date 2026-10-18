@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SysLab — System Design Learning Platform</title>
+  <meta name="description" content="Learn system design building blocks interactively with step-by-step animations, side-by-side comparisons, and real code examples." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Background grid canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-brand">
+      <div class="brand-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect x="2" y="2" width="10" height="10" rx="2" fill="#00d4ff" opacity="0.9"/>
+          <rect x="16" y="2" width="10" height="10" rx="2" fill="#a855f7" opacity="0.9"/>
+          <rect x="2" y="16" width="10" height="10" rx="2" fill="#f59e0b" opacity="0.9"/>
+          <rect x="16" y="16" width="10" height="10" rx="2" fill="#22c55e" opacity="0.9"/>
+        </svg>
+      </div>
+      <div>
+        <span class="brand-name">SysLab</span>
+        <span class="brand-tagline">System Design Lab</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="search-bar" id="search-bar">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search building blocks..." />
+      </div>
+      <div class="header-badge">10 Building Blocks</div>
+    </div>
+  </header>
+
+  <!-- Main layout -->
+  <div class="app-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section-label">All Topics</div>
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Populated by JS -->
+      </nav>
+    </aside>
+
+    <!-- Content area -->
+    <main class="content" id="content">
+      <!-- Welcome screen -->
+      <div class="welcome-screen" id="welcome-screen">
+        <div class="welcome-hero">
+          <div class="welcome-orb"></div>
+          <h1 class="welcome-title">Master System Design</h1>
+          <p class="welcome-subtitle">Learn every building block through step-by-step animations and side-by-side comparisons. Click any topic to begin.</p>
+          <div class="welcome-stats">
+            <div class="stat-card">
+              <div class="stat-num" id="stat-blocks">10</div>
+              <div class="stat-lbl">Building Blocks</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">40+</div>
+              <div class="stat-lbl">Animation Steps</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-num">10</div>
+              <div class="stat-lbl">Code Examples</div>
+            </div>
+          </div>
+          <div class="topic-grid" id="topic-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Block detail view -->
+      <div class="block-view hidden" id="block-view">
+
+        <!-- Block header -->
+        <div class="block-header" id="block-header">
+          <div class="block-icon-wrap" id="bh-icon"></div>
+          <div class="block-header-text">
+            <div class="block-category" id="bh-category"></div>
+            <h1 class="block-title" id="bh-title"></h1>
+            <p class="block-tagline" id="bh-tagline"></p>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-tab="animation" id="tab-animation">▶ Animation</button>
+          <button class="tab" data-tab="comparison" id="tab-comparison">⚖ Comparison</button>
+          <button class="tab" data-tab="concepts" id="tab-concepts">📖 Concepts</button>
+          <button class="tab" data-tab="code" id="tab-code">{'</>'}  Code</button>
+        </div>
+
+        <!-- Tab: Animation -->
+        <div class="tab-content active" id="panel-animation">
+          <div class="animation-container" id="anim-container">
+            <div class="anim-stage" id="anim-stage">
+              <!-- SVG canvas for arrows -->
+              <svg class="anim-svg" id="anim-svg" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <marker id="arrow-cyan" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#00d4ff"/>
+                  </marker>
+                  <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/>
+                  </marker>
+                  <marker id="arrow-purple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#a855f7"/>
+                  </marker>
+                  <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+                  </marker>
+                  <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+                    <path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/>
+                  </marker>
+                </defs>
+              </svg>
+              <!-- Nodes rendered by JS -->
+            </div>
+            <div class="anim-info">
+              <div class="step-indicator" id="step-indicator">
+                <div class="step-dots" id="step-dots"></div>
+                <div class="step-counter" id="step-counter">Step 1 of 4</div>
+              </div>
+              <div class="step-info-card">
+                <div class="step-title" id="anim-step-title">Loading...</div>
+                <div class="step-desc" id="anim-step-desc">Loading description...</div>
+              </div>
+              <div class="anim-controls">
+                <button class="ctrl-btn" id="btn-prev" onclick="prevStep()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15,18 9,12 15,6"/></svg>
+                  Prev
+                </button>
+                <button class="ctrl-btn primary" id="btn-play" onclick="togglePlay()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" id="play-icon"><polygon points="5,3 19,12 5,21"/></svg>
+                  <span id="play-label">Play</span>
+                </button>
+                <button class="ctrl-btn" id="btn-next" onclick="nextStep()">
+                  Next
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9,18 15,12 9,6"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Comparison -->
+        <div class="tab-content hidden" id="panel-comparison">
+          <div class="comparison-container" id="cmp-container">
+            <h2 class="cmp-title" id="cmp-title"></h2>
+            <div class="cmp-panels">
+              <!-- Without -->
+              <div class="cmp-panel without">
+                <div class="cmp-panel-label cmp-without-label" id="cmp-without-label">Without</div>
+                <div class="cmp-stage" id="cmp-stage-without">
+                  <svg class="anim-svg" id="cmp-svg-without" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="cmp-arrow-cyan-w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#00d4ff"/></marker>
+                      <marker id="cmp-arrow-green-w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/></marker>
+                      <marker id="cmp-arrow-purple-w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a855f7"/></marker>
+                      <marker id="cmp-arrow-orange-w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/></marker>
+                      <marker id="cmp-arrow-red-w" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/></marker>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="cmp-metrics" id="cmp-metrics-without"></div>
+              </div>
+              <!-- Divider -->
+              <div class="cmp-divider">
+                <div class="vs-badge">VS</div>
+              </div>
+              <!-- With -->
+              <div class="cmp-panel with">
+                <div class="cmp-panel-label cmp-with-label" id="cmp-with-label">With</div>
+                <div class="cmp-stage" id="cmp-stage-with">
+                  <svg class="anim-svg" id="cmp-svg-with" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="cmp-arrow-cyan-v" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#00d4ff"/></marker>
+                      <marker id="cmp-arrow-green-v" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/></marker>
+                      <marker id="cmp-arrow-purple-v" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#a855f7"/></marker>
+                      <marker id="cmp-arrow-orange-v" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/></marker>
+                      <marker id="cmp-arrow-red-v" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#ef4444"/></marker>
+                    </defs>
+                  </svg>
+                </div>
+                <div class="cmp-metrics" id="cmp-metrics-with"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Concepts -->
+        <div class="tab-content hidden" id="panel-concepts">
+          <div class="concepts-container">
+            <div class="concepts-grid">
+              <div class="concept-card">
+                <h3>📌 What it is</h3>
+                <p id="concept-desc"></p>
+              </div>
+              <div class="concept-card">
+                <h3>✅ Key Concepts</h3>
+                <ul id="concept-keypoints"></ul>
+              </div>
+              <div class="concept-card">
+                <h3>🚀 Use Cases</h3>
+                <ul id="concept-usecases"></ul>
+              </div>
+              <div class="concept-card tradeoff">
+                <h3>⚠️ Trade-offs</h3>
+                <ul id="concept-tradeoffs"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Code -->
+        <div class="tab-content hidden" id="panel-code">
+          <div class="code-container">
+            <div class="code-header">
+              <div class="code-title" id="code-title"></div>
+              <div class="code-lang-badge" id="code-lang"></div>
+              <button class="copy-btn" id="copy-btn" onclick="copyCode()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                </svg>
+                Copy
+              </button>
+            </div>
+            <div class="code-wrap">
+              <pre class="code-block" id="code-snippet"></pre>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
